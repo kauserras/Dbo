@@ -5,6 +5,8 @@
 
 namespace dbo = Wt::Dbo;
 
+　
+　
 enum class Role {
 	Visitor = 0,
 	Admin = 1,
@@ -37,7 +39,7 @@ void run()
 {
 	// Setup a session.
 	// provides access to our database objects.
-	auto sqlite3 = std::make_unique<dbo::backend::Sqlite3>("blog.db");
+	auto sqlite3 = std::make_unique<dbo::backend::Sqlite3>("test.db");
 	//sqlite3->setProperty("show-queries", "true");
 	dbo::Session session;
 	session.setConnection(std::move(sqlite3));
@@ -53,6 +55,7 @@ void run()
 
 	}
 	{
+		
 		dbo::Transaction transaction(session);
 
 		auto user = std::make_unique<User>();
@@ -110,8 +113,8 @@ void run()
 	{
 		dbo::Transaction transaction(session);
 		dbo::ptr<User> jay = session.find<User>().where("name = ?").bind("jay");
-		//if (jay)
-			jay.remove();
+		if (jay)
+	   jay.remove();
 	}
 
 	{
